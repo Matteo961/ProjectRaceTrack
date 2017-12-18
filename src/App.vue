@@ -14,7 +14,7 @@
           </div>
         </div>
       </div>
-      <LapData/>
+      <LapData :hidden="!isStarted"/>
     </div>
   </div>
 </template>
@@ -28,9 +28,17 @@
   export default {
     name: 'app',
     created() {
+      let potato = this;
+
       window.socket = io.connect('http://orangepipc/test');
-      window.socket.on('my response', function (msg) {
-        console.log('recv' + msg);
+      window.socket.on('my response', function (message) {
+
+        // setPlayerLapLists
+        let player = message.player - 1; // Let is local variable in js scope is destroyed once it hits end of code block.
+        let lap = message.lap; // Socket io does that for you ;)
+
+        potato.$store.dispatch('setPlayerLapList', {player: player, lap: lap});
+
       });
     },
     computed: {

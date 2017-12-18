@@ -1,25 +1,9 @@
 <template>
   <div>
-    <ul class="list-group">
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        Cras justo odio
-        <span class="badge badge-primary badge-pill">14</span>
-      </li>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        Dapibus ac facilisis in
-        <span class="badge badge-primary badge-pill">2</span>
-      </li>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        Morbi leo risus
-        <span class="badge badge-primary badge-pill">1</span>
-      </li>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        Cras justo odio
-        <span class="badge badge-primary badge-pill">14</span>
-      </li>
-      <li class="list-group-item d-flex justify-content-between align-items-center">
-        Dapibus ac facilisis in
-        <span class="badge badge-primary badge-pill">2</span>
+    <ul id="laplist" class="list-group">
+      <li class="list-group-item d-flex justify-content-between align-items-center"
+          v-for="item in lapData">
+        {{ item }}
       </li>
     </ul>
   </div>
@@ -27,7 +11,14 @@
 
 <script>
   export default {
-    name: "lap-player-data"
+    props: ['player'],
+    name: "lap-player-data",
+    computed: {
+      lapData() {
+        return this.$store.getters.playerLapList[this.player];
+      }
+    },
+    methods: {}
   }
 </script>
 

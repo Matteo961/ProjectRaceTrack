@@ -6,10 +6,10 @@
           <h2 class="card-title text-center fontneeded">Overzicht</h2>
           <div class="row">
             <div class="col">
-              <LapPlayerData></LapPlayerData>
+              <LapPlayerData player="0"></LapPlayerData>
             </div>
             <div class="col">
-              <LapPlayerData></LapPlayerData>
+              <LapPlayerData player="1"></LapPlayerData>
             </div>
           </div>
         </div>

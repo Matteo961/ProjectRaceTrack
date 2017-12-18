@@ -6,10 +6,14 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     started: false,
-    player1Name: '',
-    player2Name: '',
+    // TODO Remove hard coded names for debugging purposes.
+    player1Name: 'Player 1',
+    player2Name: 'Player 2',
+    playerLapList: [
+      [], []
+    ],
   },
-  mutations: {
+  mutations: { // Synced
     setStarted(state, value) {
       state.started = value;
     },
@@ -18,24 +22,39 @@ export const store = new Vuex.Store({
     },
     setPlayer2Name(state, name) {
       state.player2Name = name;
+    },
+    setPlayerLapList(state, params) {
+      // TODO Add limit
+      // TODO Remove oldest element.
+      state.playerLapList[params.player].push(params.lap);
+    },
+    resetPlayerLapList(state) {
+      for (let i = 0; i < state.playerLapList.length; i++) {
+        // reset the players lap list. -> This is based on the amount of arrays.
+        state.playerLapList[i].length = 0;
+      }
     }
   },
-  actions: {
+  actions: { // Async
     setStarted({commit}, value) {
-      commit('setStarted', value);
-
       if (value) {
         window.socket.emit('startcounter', {data: "start"});
       } else {
-        socket.emit('stopcounter', {data: "stop"});
+        window.socket.emit('stopcounter', {data: "stop"});
+        commit('resetPlayerLapList');
       }
+
+      commit('setStarted', value);
     },
     setPlayer1Name({commit}, name) {
       commit('setPlayer1Name', name);
     },
     setPlayer2Name({commit}, name) {
       commit('setPlayer2Name', name);
-    }
+    },
+    setPlayerLapList({commit}, params) {
+      commit('setPlayerLapList', params);
+    },
   },
   getters: {
     isStarted(state) {
@@ -49,6 +68,9 @@ export const store = new Vuex.Store({
     },
     canStart(state) {
       return state.player1Name.length > 0 && state.player2Name.length > 0;
-    }
+    },
+    playerLapList(state) {
+      return state.playerLapList;
+    },
   }
 });
