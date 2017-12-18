@@ -1,0 +1,21 @@
+@import url('../fonts/Bungee.css');
+
+.fontneeded {
+  font-family: Bungee, cursive !important;
+}
+
+body {
+  background-color: #2c2c2c;
+  background-image: url('../img/backg.jpg');
+  background-size: cover;
+  background-position: center center;
+  padding-top: 1rem;
+}
+
+.card {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+#latency {
+  color: red;
+}
